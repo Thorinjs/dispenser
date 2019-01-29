@@ -1,0 +1,14 @@
+{
+  "name": "thorin-dispenser",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {},
+  "dependencies": {
+    "thorin": "1.x",
+    "thorin-store-sql": "1.x",
+    "thorin-transport-http": "^1.1.24"
+  },
+  "engines": {
+    "node": ">= 8.x"
+  }
+}
