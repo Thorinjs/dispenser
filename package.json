@@ -4,7 +4,9 @@
   "private": true,
   "scripts": {},
   "dependencies": {
+    "bcrypt": "^3.0.3",
     "thorin": "1.x",
+    "thorin-plugin-session": "1.x",
     "thorin-store-sql": "1.x",
     "thorin-transport-http": "^1.1.24"
   },

@@ -10,6 +10,7 @@ const thorin = require('thorin');
 
 thorin
   .addStore(require('thorin-store-sql'))
+  .addPlugin(require('thorin-plugin-session'))
   .loadPath('app/lib');
 
 const setupData = require('./app/setup/data');

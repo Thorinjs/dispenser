@@ -7,6 +7,7 @@ const thorin = require('thorin');
 thorin
   .addTransport(require('thorin-transport-http'))
   .addStore(require('thorin-store-sql'))
+  .addPlugin(require('thorin-plugin-session'))
   .loadPath('app/lib');
 
 thorin.run((err) => {

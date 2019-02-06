@@ -19,12 +19,21 @@ module.exports = (modelObj, Seq) => {
   modelObj
     .index('token_hash')
     .belongsTo('project')
+    .belongsTo('account', {
+      as: 'createdBy',
+      foreignKey: 'created_by_id'
+    })
     .json(function () {
       let d = {
         id: this.id,
-        token_public: this.token_public,
-        project_id: this.project_id
+        project_id: this.project_id,
+        created_at: this.created_at
       };
+      if (this.token) {
+        d.token = this.token;
+      } else if (this.token_public) {
+        d.token_public = this.token_public;
+      }
       return d;
     });
 

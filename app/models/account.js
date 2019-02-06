@@ -10,8 +10,15 @@ module.exports = (modelObj, Seq) => {
       primaryKey: true
     })
     .field('username', Seq.STRING(120))
-    .field('password', Seq.STRING(220), {
-      defaultValue: null
-    })
+    .field('password', Seq.STRING(256), {
+      defaultValue: null,
+      private: true
+    });
+
+  modelObj
+    .belongsTo('account', {
+      as: 'createdBy',
+      foreignKey: 'created_by_id'
+    });
 
 };

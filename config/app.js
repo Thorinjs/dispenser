@@ -32,7 +32,17 @@ module.exports = {
       'setup': false
     }
   },
+  'plugin.session': {
+    'cookieName': 'dispenser',
+    'store': 'sql',
+    'namespace': 'session',
+    'removeExpired': true
+  },
   'settings': {
+    'security': {
+      'saltRounds': 10, // password salt rounds
+      'passwordLength': 10  // min password length
+    },
     'setup': {  // default settings
       'account': 'root',
       'project': 'default',

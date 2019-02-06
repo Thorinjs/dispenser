@@ -9,8 +9,7 @@ module.exports = async (config) => {
 
   await store.transaction(async (t) => {
     // Handle: SETUP_ACCOUNT and SETUP_ACCOUNT_PASSWORD
-    let accountName = process.env.SETUP_ACCOUNT || thorin.config('settings.setup.account'),
-      accountRawPassword = process.env.SETUP_ACCOUNT_PASSWORD || null;
+    let accountName = process.env.SETUP_ACCOUNT || thorin.config('settings.setup.account');
     const Account = store.model('account'),
       Project = store.model('project');
 
@@ -25,7 +24,6 @@ module.exports = async (config) => {
       accObj = Account.build({
         username: accountName
       });
-      // todo PASSWORD
       await accObj.save({
         transaction: t
       });
@@ -50,6 +48,27 @@ module.exports = async (config) => {
       });
     }
     config.project = projectObj;
+
+    if (config.project && config.account) {
+      const ProjectAccount = store.model('projectAccount');
+      let tObj = await ProjectAccount.findOne({
+        where: {
+          project_id: config.project.id,
+          account_id: config.account.id
+        }
+      });
+      if (!tObj) {
+        log.info(`Granting account: ${config.account.username} access to: ${config.project.name}`);
+        tObj = ProjectAccount.build({
+          project_id: config.project.id,
+          account_id: config.account.id
+        });
+      }
+      tObj.set('role', 'OWNER');
+      await tObj.save({
+        transaction: t
+      });
+    }
 
     // Handle: SETUP_API_KEY
     if (process.env.SETUP_API_KEY) {
